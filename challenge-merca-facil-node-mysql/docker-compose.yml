@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  node-mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node-mysql
+    depends_on:
+      - mysql
+    entrypoint: sh -c 'yarn install --frozen-lockfile && yarn start:dev'
+    env_file:
+      - .env
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    ports:
+      - 3001:3001
+    networks:
+      - mysql-net
+  mysql:
+    image: mysql
+    container_name: mysql
+    env_file:
+      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=admin
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_HOST=localhost
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - mysql-net
+networks:
+  mysql-net:
+
+volumes:
+  mysql-data:
