@@ -14,7 +14,7 @@ export class ContactService {
   async addContacts(addContactDTO: AddContactDTO, type: string) {
     const { contacts } = addContactDTO;
     if (type === 'macapa') {
-      console.log('passou aqui', contacts);
+      console.log(contacts);
       await this.repository
         .createQueryBuilder()
         .insert()

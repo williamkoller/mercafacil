@@ -17,7 +17,7 @@ import { Contact } from './contact/entities/contact.entity';
       useFactory: async (configService: ConfigService) => {
         return {
           type: 'mysql',
-          host: 'mysql',
+          host: configService.get('MAIN_DB_HOST'),
           port: parseInt(configService.get('MAIN_DB_PORT')),
           database: configService.get('MAIN_DB_DATABASE'),
           username: configService.get('MAIN_DB_USERNAME'),

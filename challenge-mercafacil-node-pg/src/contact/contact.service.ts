@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Contact } from './entities/contact.entity';
@@ -24,11 +24,12 @@ export class ContactService {
     } else if (type === 'macapa') {
       try {
         await this.http.axiosRef.post(
-          'https://2f99-2804-14c-87b0-88e2-d9cf-3330-5ada-4a2f.sa.ngrok.io/contacts/macapa',
+          'https://38b7-2804-14c-87b0-88e2-cb97-889d-d5bb-193.sa.ngrok.io/contacts/macapa',
           { contacts },
         );
       } catch (error) {
         console.log(error);
+        throw new BadRequestException(error);
       }
     }
 
